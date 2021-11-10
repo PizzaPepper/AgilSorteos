@@ -1,0 +1,106 @@
+/*Aplica estilo a todos los elementos de la clase "imgSorteo"*/
+.imgSorteo{
+  height: 100px;
+  width: 100px;
+}
+/*Aplica estilo a todos los elementos de la clase "tituloElemento"*/
+.tituloElemento{
+  color: white;
+}
+/*Aplica estilo a todos los elementos h3 de la clase "tituloElemento"*/
+.tituloElemento h3{
+  text-align: center;
+}
+/*Aplica estilo a todos los elementos de la clase "botoneraElemento"*/
+.botoneraElemento{
+  padding-top: 50%;
+}
+
+
+/*Aplica estilo al elemento con el id: "btnReturn*/
+#btnReturn{
+  border: none;
+  outline: none;
+  background: none;
+  
+}
+/*Aplica estilo cuando el detecta el evento:"hover" en el elemento con el id: "btnReturn"*/
+#btnReturn:hover{
+  border: 1px solid white;
+}
+
+
+/*Aquí va el que hace el método del Eliu*/
+#barraTotal{
+  position: relative;
+  height: 135px;
+  background-color: #D5E8D4;
+  border-radius: 5px;
+  width: 100%;
+}
+/*Aquí va el que hace el método del Eliu*/
+#barraActual{
+  height: 135px;
+  border-radius: 5px 20px 20px 5px;
+  background-color: green;
+  width: 50%;  
+}
+/*Aquí va el que hace el método del Eliu*/
+#areaTexto{
+  position: absolute;
+}
+
+
+/*Se encarga de estilizar el elemento con el id "registroBoleto"
+a su vez se encarga de ordenar los elementos a la derecha, poner un espacio
+en medio, enviar todo este elemento junto con sus hijos al bottom y por ultimo
+darle un margen de 10px.*/
+#registroBoletos{  
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;  
+}
+
+/*Se encarga de estilizar todos los elementos de la clase "cuadroInfo"
+Lo que hace es crear un cuadrado y redondear sus esquinas. */
+.cuadroInfo{  
+  height: 300px;  
+  width: 300px;  
+  border-radius: 15px 15px 15px 15px;
+}
+/*Se encarga de dar estilo a el elemento con el id: "boletosTotales*/
+#boletosTotales{
+  background-color: aqua;
+  border: 1px solid aqua;
+}
+/*Se encarga de dar estilo a el elemento con el id: "boletosDisponibles*/
+#boletosDisponibles{
+  background-color: #FAF575;
+  border: 1px solid #FAF575;
+}
+/*Se encarga de dar estilo a el elemento con el id: "boletosApartados*/
+#boletosApartados{
+  background-color: #B6B4B4;
+  border: 1px solid #B6B4B4;
+}/*Se encarga de dar estilo a el elemento con el id: "boletosTtComprados*/
+#boletosComprados{
+  background-color: #FFFFFF;
+  border: 1px solid skyblue;
+}
+/*Se encarga de dar estilo a todos los elementos de la clase: "cuadroInfo"*/
+.cuadroInfo{
+  padding-top: 100px;
+  text-align: center;
+}
+
+#opciones ul li{
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+#tabla{
+  width: 1000px;
+}
