@@ -46,6 +46,22 @@
 /*Aquí va el que hace el método del Eliu*/
 #areaTexto{
   position: absolute;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  display: inline-flex;
+}
+
+#izq{
+  width: 50%;
+  display: inline-block;
+  text-align: center;
+}
+
+#der{
+  width: 50%;
+  text-align: center;
+  display: inline-block;
 }
 
 
