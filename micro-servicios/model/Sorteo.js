@@ -14,4 +14,10 @@ const Sorteo = {
     estado: String 
 };
 
-module.exports = Sorteo;
+
+
+
+const sorteoSchema = new mongoose.Schema(Sorteo);
+const sorteoModel = mongoose.model('sorteo',sorteoSchema);
+
+module.exports = sorteoModel;

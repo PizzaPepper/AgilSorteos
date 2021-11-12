@@ -5,7 +5,6 @@ const app = require('./app');
 const DB = process.env.DATABASE;
 
 
-
 // Inicializa la base de datos
 mongoose.connect(DB).then(con=>{
     console.log('Correctly connected to the DB');

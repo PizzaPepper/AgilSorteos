@@ -11,6 +11,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 //rutas
-app.use("/api/v1/sorteo",sorteo);
+app.use("/api/v1/sorteos",sorteo);
 
 module.exports = app;

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Boleto = {
     sorteo: {
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Sorteo'
+        ref: 'sorteo'
     },
     numero: Number,
     comprobantePago: String,
@@ -11,8 +11,14 @@ const Boleto = {
     fechaDeMovimiento: Date,
     usuario: {
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Usuario'
+        ref: 'usuario'
     }
 };
 
-module.exports = Boleto;
+
+
+
+const boletoSchema = new mongoose.Schema(Boleto);
+const boletoModel = mongoose.model('boleto',boletoSchema);
+
+module.exports = boletoModel;
