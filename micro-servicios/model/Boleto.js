@@ -1,24 +1,33 @@
 const mongoose = require('mongoose');
 
-const Boleto = {
-    sorteo: {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'sorteo'
+const boletoSchema = new mongoose.Schema(
+    {
+        numero: { type: Number, required: true },
+        comprobantePago: { type: String },
+        tipoPago: { type: String },
+        estado: { type: String, required: true },
+        movimientoBoleto: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'movimientoBoleto',
+                autopopulate: true,
+            },
+        ],
+        persona: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'sorteo',
+            autopopulate: true,
+        },
+        cliente :{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'cliente',
+            autopopulate: true,
+        }
     },
-    numero: Number,
-    comprobantePago: String,
-    estado: String,
-    fechaDeMovimiento: Date,
-    usuario: {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'usuario'
-    }
-};
+    { collection: 'boleto', versionKey: false }
+);
 
 
-
-
-const boletoSchema = new mongoose.Schema(Boleto);
 const boletoModel = mongoose.model('boleto',boletoSchema);
 
 module.exports = boletoModel;

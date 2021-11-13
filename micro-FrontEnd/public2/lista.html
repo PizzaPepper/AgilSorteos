@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+  <title>
+    Lista de sorteos
+  </title>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <!-- Nucleo Icons -->
+  <!-- CSS Files -->
+  <link id="pagestyle" href="./assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+</head>
+
+<body >
+    <header>
+        <nav class="navbar navbar-expand-lg  bg-gradient-faded-info">
+            <div class="container d-flex justify-content-center">
+                <h1 class="text-white">SORTEOS</h1>
+            </div>
+            <div class="container position-absolute d-flex justify-content-end">
+                <button id="btnHistorico" type="button" class="btn btn-secondary btn-sm">Generar reporte <br> historico</button>
+            </div>
+        </nav>
+    </header>
+    <main class="bg-gray-200">
+        <div  class="container p-4" >
+            <ul id="lista" class="sorteo list-group ">
+                <li class="compSorteo list-group-item rounded-3 bg-gradient-info d-flex justify-content-between mb-1">
+                    <div>
+                        <figure>
+                            <img class="imgSorteo rounded float-start img-fluid max-height-100" id="imgSorteo" src="./img/Imagen.png" alt="">
+                        </figure>
+                    </div>
+                    <div class="tituloElemento text-center ">
+                        <h2 class="text-white">Nombre sorteo</h2> <h3 class="text-light">Vigente</h3>
+                    </div>
+                    <div class="botoneraElemento pt-4">
+                        <button type="button" class="btn btn-primary btn-sm p-3">Tablero</button>
+                        <button type="button" class="btn btn-primary btn-sm">Generar<br> reporte Números</button>
+                        <button type="button" class="btn btn-primary btn-sm">Generar <br> reporte deudores</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </main>
+  <!--   Core JS Files   -->
+  <script src="./assets/js/core/popper.min.js"></script>
+  <script src="./assets/js/core/bootstrap.min.js"></script>
+  <script src="./assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="./assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="./assets/js/material-dashboard.min.js?v=3.0.0"></script>
+</body>
+
+</html>

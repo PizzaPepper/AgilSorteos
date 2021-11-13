@@ -1,35 +1,35 @@
 'use strict'
 
 class ListaSorteos extends HTMLElement {
-    
-    #urlBootstrap = "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css";
-    #urlIntegrity = "sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3";
-    #urlService = '#'
-    #urlSorteos = '#'
-    //integrity
+    #urlSorteos = 'http://localhost:3312/api/v1/sorteos/lista';
+    #configFetch = {
+        method: 'GET', 
+        mode: 'cors',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
     constructor() {
         super();
+        
     }
 
     connectedCallback() {
-        this.attachShadow({mode:'open'});
-        this.#render();
-        const tagLista = this.shadowRoot.getElementById('lista');
-        this.#listarSorteos(tagLista);
-        this.#agregarEstilos();
+        const shadow = this.attachShadow({mode:'open'});
+        this.#render(shadow);
+        this.#agregarSorteos(shadow);
+        this.#agregarEventos(shadow);
+        this.#agregarEstilos(shadow);
         
-
+        
     }
-
-    #render() {
-        this.shadowRoot.innerHTML += `
-        <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-            <div class="container position-absolute d-flex justify-content-start">
-                <button id="btnReturn"> <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-                  </svg></button>
-            </div>
+    
+    #render(shadow) {
+        shadow.innerHTML += `
+        <body >
+    <header>
+        <nav class="navbar navbar-expand-lg  bg-gradient-faded-info">
             <div class="container d-flex justify-content-center">
                 <h1 class="text-white">SORTEOS</h1>
             </div>
@@ -38,18 +38,19 @@ class ListaSorteos extends HTMLElement {
             </div>
         </nav>
     </header>
-    <main>
+    <main class="bg-gray-200">
         <div  class="container p-4" >
             <ul id="lista" class="sorteo list-group ">
-
+                
+                
             </ul>
         </div>
     </main>
-        `;
+        
+    `;
     }
 
-    #listarSorteos(ulID){
-        const data =this.#getDataSorteos();
+    #listarSorteos(ulID,data){
         
         for (const x of data){
             ulID.innerHTML+=this.#setTemplate(x);
@@ -59,42 +60,63 @@ class ListaSorteos extends HTMLElement {
 
     
     #setTemplate(data){
-        return `<li class="compSorteo list-group-item bg-info d-flex justify-content-between">
-        <div>
-            <figure>
-                <img class="imgSorteo rounded float-left" id="imgSorteo" src="/micro-FrontEnd/listaComponent/img/Imagen.png" alt="">
-            </figure>
-        </div>
-        <div class="tituloElemento">
-            <h2>${data.nombre}</h2> <h3>${data.estado}</h3>
-        </div>
-        <div class="justify-content-center" class="text-xs-right" class="botoneraElemento align-items-center">
-            <button type="button" value="${data.id}" class="btn btn-secondary btn-sm p-3">Tablero</button>
-            <button type="button" value="${data.id}" class="btn btn-secondary btn-sm">Generar<br> reporte Números</button>
-            <button type="button" value="${data.id}" class="btn btn-secondary btn-sm">Generar <br> reporte deudores</button>
-        </div>
-    </li>`;
+        return `
+        <li class="compSorteo list-group-item rounded-3 bg-gradient-info d-flex justify-content-between mb-1">
+                    <div>
+                        <figure>
+                            <img class="imgSorteo rounded float-start img-fluid max-height-100" id="imgSorteo" src="/micro-FrontEnd/listaComponent/img/Imagen.png" alt="">
+                        </figure>
+                    </div>
+                    <div class="tituloElemento text-center ">
+                        <h2 class="text-white">${data.titulo}</h2> <h3 class="text-light">${data.estado}</h3>
+                    </div>
+                    <div class="botoneraElemento pt-4">
+                        <button type="button" class="btn btn-primary btn-sm p-3" value="${data._id}" >Tablero</button>
+                        <button type="button" class="btn btn-primary btn-sm" value="${data._id}">Generar<br> reporte Números</button>
+                        <button type="button" class="btn btn-primary btn-sm" value="${data._id}">Generar <br> reporte deudores</button>
+                    </div>
+                </li>`;
     }
 
-
-    #agregarEstilos() {
-        
-        const link_1 = document.createElement('link');
-        link_1.setAttribute('rel', 'stylesheet');
-        link_1.setAttribute("href", '/micro-FrontEnd/listaComponent/style/lista.css');
-        
-        const link_2 = document.createElement('link');
-        link_2.setAttribute('rel', 'stylesheet');
-        link_2.setAttribute("href", this.#urlBootstrap);
-        link_2.setAttribute('integrity', this.#urlIntegrity);
-        link_2.setAttribute('crossorigin', 'anonymous');
-        
-        this.shadowRoot.appendChild(link_2);
-        this.shadowRoot.appendChild(link_1);
-        
+    #agregarEventos(shadow){
+        const botones = shadow.querySelectorAll(".botoneraElemento");
+        botones.forEach(x=>{
+            x.addEventListener("click",(event)=>this.#cambiarPantalla(event.path[0].value));
+        })
     }
 
-    #getDataSorteos() {
+    #agregarEstilos(shadow) {
+        
+        const linkFonts = document.createElement('link');
+        linkFonts.setAttribute('rel', 'stylesheet');
+        linkFonts.setAttribute('type','text/css');
+        linkFonts.setAttribute("href", 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700');
+        const linkIcons = document.createElement('link');
+        linkIcons.setAttribute('rel', 'stylesheet');
+        linkIcons.setAttribute('href','./assets/css/nucleo-icons.css');
+        const linkSvg = document.createElement('link');
+        linkSvg.setAttribute('rel', 'stylesheet');
+        linkSvg.setAttribute('href','./assets/css/nucleo-svg.css');
+        const scrAwes =  document.createElement('script');
+        scrAwes.setAttribute('src','https://kit.fontawesome.com/42d5adcbca.js')
+        scrAwes.setAttribute('crossorigin','anonymous');
+        const linkMater =  document.createElement('link');
+        linkMater.setAttribute('rel','stylesheet');
+        linkMater.setAttribute('href','https://fonts.googleapis.com/icon?family=Material+Icons+Round');
+        const linkCSS = document.createElement('link');
+        linkCSS.setAttribute('id','pagestyle');
+        linkCSS.setAttribute('href',"./assets/css/material-dashboard.css?v=3.0.0");
+        linkCSS.setAttribute('rel','stylesheet');
+        
+        shadow.appendChild(linkFonts);
+        shadow.appendChild(linkIcons);
+        shadow.appendChild(linkSvg);
+        shadow.appendChild(linkMater);
+        shadow.appendChild(linkCSS);
+        shadow.appendChild(scrAwes);
+    }
+
+    #agregarSorteos(shadow) {
         const data = 
             [{
                 id: 1,
@@ -140,11 +162,32 @@ class ListaSorteos extends HTMLElement {
             }
         ];
 
-        return data;
+        const tagLista = shadow.getElementById('lista');
+        this.#listarSorteos(tagLista,data);
+
+
+        // fetch(this.#urlSorteos,this.#configFetch)
+        // .then(response=> response.json())
+        // .then(data => {
+        //     const tagLista = shadow.getElementById('lista');
+        //     this.#listarSorteos(tagLista,data);
+        //     })
+        //     .catch(error=>console.log(error));
     }
+
+    #cambiarPantalla(id){
+        const lista = this.shadowRoot.host;
+        
+        //Limpia el contenido
+        lista.shadowRoot.innerHTML = "";
+        lista.outerHTML = `<sorteo-tablero sorteoId="${id}"></sorteo-tablero>`;
+        
+    }
+
+
 
 }
 
-window.customElements.define('sorteos-info',ListaSorteos);
+window.customElements.define('sorteos-lista',ListaSorteos);
 
 
