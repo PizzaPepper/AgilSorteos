@@ -1,5 +1,16 @@
 'use strict'
+/**
+ * listaSorteos.js
+ * Archivo js con la finalidad de realizar un micro-frondend donde se carguen los sorteos vigentes
+ * para que de esta forma el usuario pueda realizar las diversas acciones.
+ * @author: "La comunidad del anillo"
+ * Fecha: 13 - 11 - 2021
+ */
 
+/**
+ * Clase inicial para empezar con el micro-frondend
+ * se configuran diversos elementos como el Fetch para los permisos.
+ */
 class ListaSorteos extends HTMLElement {
     #urlSorteos = 'http://localhost:3312/api/v1/sorteos/lista';
     #configFetch = {
@@ -14,17 +25,19 @@ class ListaSorteos extends HTMLElement {
         super();
         
     }
-
+/**
+ * ConnectedCallback para cargar todo en el shadow DOM
+ */
     connectedCallback() {
         const shadow = this.attachShadow({mode:'open'});
         this.#render(shadow);
         this.#agregarSorteos(shadow);
         this.#agregarEventos(shadow);
         this.#agregarEstilos(shadow);
-        
-        
     }
-    
+    /**
+     * método privado para pintar el esquema HTML que se utilizará como base.
+     */
     #render(shadow) {
         shadow.innerHTML += `
         <body >
@@ -46,19 +59,24 @@ class ListaSorteos extends HTMLElement {
             </ul>
         </div>
     </main>
-        
     `;
     }
-
+/**
+ * Se encarga de añadir a varios templates de los sorteos vigentes
+ * mediante un forEach.
+ */
     #listarSorteos(ulID,data){
-        
-        for (const x of data){
+        for(const x of data){
             ulID.innerHTML+=this.#setTemplate(x);
         };
-
     }
 
-    
+    /**
+     * Método encargado de devolver un template html con los datos de un elemento
+     * (sorteo) de la base de datos.
+     * @param {*} data Sorteo a pintar
+     * @returns Regresa un template para ser añadido posteriormente al @render().
+     */
     #setTemplate(data){
         return `
         <li class="compSorteo list-group-item rounded-3 bg-gradient-info d-flex justify-content-between mb-1">
@@ -77,14 +95,21 @@ class ListaSorteos extends HTMLElement {
                     </div>
                 </li>`;
     }
-
+/**
+ * Método encargado de añadirle el método oyente a los botones de cada
+ * elemento de la lista.
+ * @param {*} shadow shadow DOM
+ */
     #agregarEventos(shadow){
         const botones = shadow.querySelectorAll(".botoneraElemento");
         botones.forEach(x=>{
             x.addEventListener("click",(event)=>this.#cambiarPantalla(event.path[0].value));
         })
     }
-
+/**
+ * Método encargado de dar el estilo CSS a los elemtos dentro dle ShadowDOM o micro-frondend
+ * @param {*} shadow Shadow DOM.
+ */
     #agregarEstilos(shadow) {
         
         const linkFonts = document.createElement('link');
@@ -115,9 +140,13 @@ class ListaSorteos extends HTMLElement {
         shadow.appendChild(linkCSS);
         shadow.appendChild(scrAwes);
     }
-
+/**
+ * Método encargado de obtener la lista de la base datos con los sorteos vigentes y guardarlos
+ * en una cosntante llamada "data".
+ * @param {*} shadow 
+ */
     #agregarSorteos(shadow) {
-        const data = 
+        /*const data = 
             [{
                 id: 1,
                 rangoDeNumero:{desde:1,hasta:100},
@@ -164,24 +193,26 @@ class ListaSorteos extends HTMLElement {
 
         const tagLista = shadow.getElementById('lista');
         this.#listarSorteos(tagLista,data);
-
-
-        // fetch(this.#urlSorteos,this.#configFetch)
-        // .then(response=> response.json())
-        // .then(data => {
-        //     const tagLista = shadow.getElementById('lista');
-        //     this.#listarSorteos(tagLista,data);
-        //     })
-        //     .catch(error=>console.log(error));
+    */
+         fetch(this.#urlSorteos,this.#configFetch)
+         .then(response=> response.json())
+         .then(data => {
+             const tagLista = shadow.getElementById('lista');
+             this.#listarSorteos(tagLista,data);
+             })
+             .catch(error=>console.log(error));
     }
-
+/**
+ * Se supone que cambia de pantalla pero realmente pinta una nueva pantalla
+ * en base al ide seleccionado pero nose bien como, el Eliu lo explicará despues.
+ * @param {*} id 
+ */
     #cambiarPantalla(id){
         const lista = this.shadowRoot.host;
         
         //Limpia el contenido
         lista.shadowRoot.innerHTML = "";
         lista.outerHTML = `<sorteo-tablero sorteoId="${id}"></sorteo-tablero>`;
-        
     }
 
 

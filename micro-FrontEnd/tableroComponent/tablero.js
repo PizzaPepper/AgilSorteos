@@ -1,6 +1,15 @@
 'use strict'
 
 class Tablero extends HTMLElement{
+    #urlSorteos = 'http://localhost:3312/api/v1/sorteos/lista';
+    #configFetch = {
+        method: 'GET', 
+        mode: 'cors',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
 
     constructor(){
         super();
@@ -166,7 +175,7 @@ class Tablero extends HTMLElement{
             nombre: "Caja de Yakul 1lt",
             descripcion: "foo descripcion",
             estado: "VIGENTE" 
-        }
+        }        
     ];
 
         const dataBoletos = [{
@@ -202,8 +211,14 @@ class Tablero extends HTMLElement{
         },
     ];
 
-        
-        return dataBoletos[sorteoId];
+/*    fetch(this.#urlSorteos, this.#configFetch)
+    .then(response => response.json())
+    .then(data => {
+        const tagLista = shadow.getElementById('lista');
+        this.#listarSorteos(tagLista,data);
+        })
+        .catch(error=>console.log(error));        
+        return dataBoletos[sorteoId];*/
     }
 
     #agregarEstilos(shadow){
@@ -235,6 +250,8 @@ class Tablero extends HTMLElement{
         shadow.appendChild(linkCSS);
         shadow.appendChild(scrAwes);
     }
+
+
     
 
 
