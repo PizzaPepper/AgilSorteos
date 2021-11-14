@@ -146,61 +146,13 @@ class ListaSorteos extends HTMLElement {
  * @param {*} shadow 
  */
     #agregarSorteos(shadow) {
-        /*const data = 
-            [{
-                id: 1,
-                rangoDeNumero:{desde:1,hasta:100},
-                precioDeNumeros: 25.00,
-                fechaInicioDeVenta: new Date(2021,11,11),
-                fechaFinDeVenta: new Date(2021,11,29),
-                fechaDeCreacion: new Date(2021,11,9),
-                fechaDeSorteo: new Date(2021,12,1),
-                diasLimiteApartado: 5,
-                imagen: "/foo",
-                nombre: "Cuatrimoto",
-                descripcion: "foo descripcion",
-                estado: "VIGENTE" 
-            },
-            {
-                id: 2,
-                rangoDeNumero:{desde:1,hasta:50},
-                precioDeNumeros: 15.00,
-                fechaInicioDeVenta: new Date(2021,11,12),
-                fechaFinDeVenta: new Date(2021,12,5),
-                fechaDeCreacion: new Date(2021,11,10),
-                fechaDeSorteo: new Date(2021,12,7),
-                diasLimiteApartado: 4,
-                imagen: "/foo2",
-                nombre: "Narco Lancha",
-                descripcion: "foo descripcion",
-                estado: "VIGENTE" 
-            },
-            {
-                id: 3,
-                rangoDeNumero:{desde:1,hasta:75},
-                precioDeNumeros: 50.00,
-                fechaInicioDeVenta: new Date(2021,11,13),
-                fechaFinDeVenta: new Date(2021,12,8),
-                fechaDeCreacion: new Date(2021,11,7),
-                fechaDeSorteo: new Date(2021,12,10),
-                diasLimiteApartado: 3,
-                imagen: "/foo2",
-                nombre: "Caja de Yakul 1lt",
-                descripcion: "foo descripcion",
-                estado: "VIGENTE" 
-            }
-        ];
-
-        const tagLista = shadow.getElementById('lista');
-        this.#listarSorteos(tagLista,data);
-    */
-         fetch(this.#urlSorteos,this.#configFetch)
-         .then(response=> response.json())
-         .then(data => {
-             const tagLista = shadow.getElementById('lista');
-             this.#listarSorteos(tagLista,data);
-             })
-             .catch(error=>console.log(error));
+        fetch(this.#urlSorteos,this.#configFetch)
+        .then(response=> response.json())
+        .then(data => {
+            const tagLista = shadow.getElementById('lista');
+            this.#listarSorteos(tagLista,data);
+            })
+            .catch(error=>console.log(error));
     }
 /**
  * Se supone que cambia de pantalla pero realmente pinta una nueva pantalla

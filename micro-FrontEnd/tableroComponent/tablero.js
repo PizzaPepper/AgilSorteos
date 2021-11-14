@@ -1,7 +1,7 @@
 'use strict'
 
 class Tablero extends HTMLElement{
-    #urlSorteos = 'http://localhost:3312/api/v1/sorteos/lista';
+    #urlSorteos = 'http://localhost:3312/api/v1/sorteos/lista/';
     #configFetch = {
         method: 'GET', 
         mode: 'cors',
@@ -19,7 +19,7 @@ class Tablero extends HTMLElement{
         const sorteoId = parseInt(this.getAttribute("sorteoId"));
         const shadow = this.attachShadow({mode:'open'});
         this.#render(shadow);
-        //this.#agregarInfo(sorteoId)
+        this.#agregarInfo(sorteoId)
         this.#agregarEstilos(shadow);
     }
 
@@ -96,7 +96,7 @@ class Tablero extends HTMLElement{
     </main>`;
     }
 
-    #agregarInfo(shadow,sorteoId){
+    async #agregarInfo(shadow,sorteoId){
         const fInicio = shadow.querySelector('#FechaInicio');
         const nombre = shadow.querySelector('#nombreSorteo');
         const fFinal = shadow.querySelector('#FechaFinal');
@@ -107,8 +107,9 @@ class Tablero extends HTMLElement{
         const pApar = shadow.querySelector('#pApartados');
         const pComp = shadow.querySelector('#pComprados');
 
-        const sorteo = this.#getSorteos(sorteoId);
-
+        const data = await this.#consultarSorteo(sorteoId);        
+        console.log(data);
+        /*
         fInicio.innerHTML = sorteo.fechaDeCreacion;
         nombre.innerHTML = sorteo.sorteo;
         fFinal.innerHTML = sorteo.fechaDeSorteo;
@@ -117,13 +118,13 @@ class Tablero extends HTMLElement{
         pTotal.innerHTML = sorteo.totales;
         pDisp.innerHTML = sorteo.disponibles;
         pApar.innerHTML = sorteo.apartados;
-        pComp.innerHTML = sorteo.comprados;
+        pComp.innerHTML = sorteo.comprados;        
 
         const Meta = sorteo.totales;
         const Actual = sorteo.comprados;
 
         this.#setBarraActual(shadow,Meta,Actual);
-
+        */
     }
 
     #setBarraActual(shadow,Meta,Actual){
@@ -132,93 +133,13 @@ class Tablero extends HTMLElement{
         barraTotal.style.width= `${porcen}%`;
     }
 
-    #getSorteos(sorteoId){
-        const dataSorteos = 
-        [{
-            id: 1,
-            rangoDeNumero:{desde:1,hasta:100},
-            precioDeNumeros: 25.00,
-            fechaInicioDeVenta: new Date(2021,11,11),
-            fechaFinDeVenta: new Date(2021,11,29),
-            fechaDeCreacion: new Date(2021,11,9),
-            fechaDeSorteo: new Date(2021,12,1),
-            diasLimiteApartado: 5,
-            imagen: "/foo",
-            nombre: "Cuatrimoto",
-            descripcion: "foo descripcion",
-            estado: "VIGENTE" 
-        },
-        {
-            id: 2,
-            rangoDeNumero:{desde:1,hasta:50},
-            precioDeNumeros: 15.00,
-            fechaInicioDeVenta: new Date(2021,11,12),
-            fechaFinDeVenta: new Date(2021,12,5),
-            fechaDeCreacion: new Date(2021,11,10),
-            fechaDeSorteo: new Date(2021,12,7),
-            diasLimiteApartado: 4,
-            imagen: "/foo2",
-            nombre: "Narco Lancha",
-            descripcion: "foo descripcion",
-            estado: "VIGENTE" 
-        },
-        {
-            id: 3,
-            rangoDeNumero:{desde:1,hasta:75},
-            precioDeNumeros: 50.00,
-            fechaInicioDeVenta: new Date(2021,11,13),
-            fechaFinDeVenta: new Date(2021,12,8),
-            fechaDeCreacion: new Date(2021,11,7),
-            fechaDeSorteo: new Date(2021,12,10),
-            diasLimiteApartado: 3,
-            imagen: "/foo2",
-            nombre: "Caja de Yakul 1lt",
-            descripcion: "foo descripcion",
-            estado: "VIGENTE" 
-        }        
-    ];
-
-        const dataBoletos = [{
-            id:1,
-            sorteo:dataSorteos[0].nombre,
-            precio:dataSorteos[0].precioDeNumeros,
-            fechaDeCreacion:dataSorteos[0].fechaDeCreacion,
-            fechaDeSorteo:dataSorteos[0].fechaDeSorteo,
-            totales:(dataSorteos[0].rangoDeNumero.hasta - dataSorteos[0].rangoDeNumero.desde)+1,
-            disponibles:50,
-            apartados:5,
-            comprados:50
-        },{
-            id:2,
-            sorteo:dataSorteos[1].nombre,
-            precio:dataSorteos[1].precioDeNumeros,
-            fechaDeCreacion:dataSorteos[1].fechaDeCreacion,
-            fechaDeSorteo:dataSorteos[1].fechaDeSorteo,
-            totales:(dataSorteos[1].rangoDeNumero.hasta - dataSorteos[1].rangoDeNumero.desde)+1,
-            disponibles:40,
-            apartados:5,
-            comprados:10
-        },{
-            id:3,
-            sorteo:dataSorteos[2].nombre,
-            precio:dataSorteos[2].precioDeNumeros,
-            fechaDeCreacion:dataSorteos[2].fechaDeCreacion,
-            fechaDeSorteo:dataSorteos[2].fechaDeSorteo,
-            totales:(dataSorteos[2].rangoDeNumero.hasta - dataSorteos[2].rangoDeNumero.desde)+1,
-            disponibles:70,
-            apartados:5,
-            comprados:5
-        },
-    ];
-
-/*    fetch(this.#urlSorteos, this.#configFetch)
-    .then(response => response.json())
-    .then(data => {
-        const tagLista = shadow.getElementById('lista');
-        this.#listarSorteos(tagLista,data);
-        })
-        .catch(error=>console.log(error));        
-        return dataBoletos[sorteoId];*/
+    #consultarSorteo(sorteoId){
+        fetch(this.#urlSorteos+sorteoId, this.#configFetch)
+        .then(response => response.json())
+        .then(data=>{
+            return data;
+        });
+            
     }
 
     #agregarEstilos(shadow){
