@@ -28,10 +28,12 @@ class ListaSorteos extends HTMLElement {
 /**
  * ConnectedCallback para cargar todo en el shadow DOM
  */
-    connectedCallback() {
+    async connectedCallback() {
         const shadow = this.attachShadow({mode:'open'});
         this.#render(shadow);
-        this.#agregarSorteos(shadow);
+        const data = await this.#agregarSorteos(shadow);
+       
+        this.#listarSorteos(shadow,data);
         this.#agregarEventos(shadow);
         this.#agregarEstilos(shadow);
     }
@@ -65,10 +67,11 @@ class ListaSorteos extends HTMLElement {
  * Se encarga de añadir a varios templates de los sorteos vigentes
  * mediante un forEach.
  */
-    #listarSorteos(ulID,data){
+    #listarSorteos(shadow,data){
+        const ulID = shadow.getElementById('lista');
         for(const x of data){
             ulID.innerHTML+=this.#setTemplate(x);
-        };
+        };        
     }
 
     /**
@@ -86,12 +89,12 @@ class ListaSorteos extends HTMLElement {
                         </figure>
                     </div>
                     <div class="tituloElemento text-center ">
-                        <h2 class="text-white">${data.titulo}</h2> <h3 class="text-light">${data.estado}</h3>
+                        <h2 class="text-white">${data.titulo}</h2> <h3 class="text-light">${data.estadoSorteo}</h3>
                     </div>
                     <div class="botoneraElemento pt-4">
-                        <button type="button" class="btn btn-primary btn-sm p-3" value="${data._id}" >Tablero</button>
-                        <button type="button" class="btn btn-primary btn-sm" value="${data._id}">Generar<br> reporte Números</button>
-                        <button type="button" class="btn btn-primary btn-sm" value="${data._id}">Generar <br> reporte deudores</button>
+                        <button type="button" class="btn-tablero btn btn-primary btn-sm p-3" value="${data._id}" >Tablero</button>
+                        <button type="button" class="btn-reporteNumeros btn btn-primary btn-sm" value="${data._id}">Generar<br> reporte Números</button>
+                        <button type="button" class="btn-reporteDeudores btn btn-primary btn-sm" value="${data._id}">Generar <br> reporte deudores</button>
                     </div>
                 </li>`;
     }
@@ -100,11 +103,18 @@ class ListaSorteos extends HTMLElement {
  * elemento de la lista.
  * @param {*} shadow shadow DOM
  */
-    #agregarEventos(shadow){
-        const botones = shadow.querySelectorAll(".botoneraElemento");
+    #agregarEventos(shadow){        
+        //Eventos Tablero
+        const botones = shadow.querySelectorAll(".btn-tablero");
         botones.forEach(x=>{
-            x.addEventListener("click",(event)=>this.#cambiarPantalla(event.path[0].value));
+            x.addEventListener("click",(event)=>{this.#cambiarPantalla(event.path[0].value)});
         })
+        //Eventos Reporte Numeros
+        //TODO: Hacer reportes de numeros
+        //Eventos Reportes Deudores
+        //TODO: Hacer reportes de deudores
+        //Eventos Reportes Historial
+        //TODO: Hacer reportes de Historial
     }
 /**
  * Método encargado de dar el estilo CSS a los elemtos dentro dle ShadowDOM o micro-frondend
@@ -145,14 +155,9 @@ class ListaSorteos extends HTMLElement {
  * en una cosntante llamada "data".
  * @param {*} shadow 
  */
-    #agregarSorteos(shadow) {
-        fetch(this.#urlSorteos,this.#configFetch)
-        .then(response=> response.json())
-        .then(data => {
-            const tagLista = shadow.getElementById('lista');
-            this.#listarSorteos(tagLista,data);
-            })
-            .catch(error=>console.log(error));
+    async #agregarSorteos() {
+        return await fetch(this.#urlSorteos,this.#configFetch)
+        .then(response=> response.json());
     }
 /**
  * Se supone que cambia de pantalla pero realmente pinta una nueva pantalla
@@ -161,7 +166,6 @@ class ListaSorteos extends HTMLElement {
  */
     #cambiarPantalla(id){
         const lista = this.shadowRoot.host;
-        
         //Limpia el contenido
         lista.shadowRoot.innerHTML = "";
         lista.outerHTML = `<sorteo-tablero sorteoId="${id}"></sorteo-tablero>`;

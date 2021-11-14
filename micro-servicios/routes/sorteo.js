@@ -51,16 +51,21 @@ router.get('/lista/:id', async (req,res)=>{
         y en  base a ellos se calculan los demas.*/
         const dataBoletos = dataSorteo.boletos;
         const totales = (dataSorteo.numMax - dataSorteo.numMin)+1
-        const disponibles = dataBoletos.filter(x=>x.estado=="LIBRE").length;
-        const pagados = dataBoletos.filter(x=>x.estado=="PAGADO").length;
-        const apartados = dataBoletos.filter(x=>x.estado=="APARTADO").length;
-        //Se crea un JSON con el objeto que se acaba de obtener
+        const disponibles = dataBoletos.filter(x => x.estado=="LIBRE").length;
+        const pagados = dataBoletos.filter(x => x.estado=="PAGADO").length;
+        const apartados = dataBoletos.filter(x => x.estado=="APARTADO").length;
+        //Se crea una función ánonima para darle un formato especifico a la fecha para ser exacto "DD/MM/AAAA"
+        const formatDate = (date)=>{
+            let formatted_date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+            return formatted_date;
+        };        
+        ///Se crea un JSON con el objeto que se acaba de obtener
         const sorteo = {
-            sorteo: dataSorteo.nombre,
+            sorteo: dataSorteo.titulo,
             dineroActual: dataSorteo.precioNumeros*pagados,
             dineroMeta: dataSorteo.precioNumeros*totales,
-            fechaDeCreacion: dataSorteo.fechaDeCreacion,
-            fechaDeSorteo:dataSorteo.fechaDeSorteo,
+            fechaCreacion: formatDate(dataSorteo.fechaCreacion),
+            fechaSorteo: formatDate(dataSorteo.fechaSorteo),
             totales: totales,
             disponibles:disponibles,
             pagados:pagados,

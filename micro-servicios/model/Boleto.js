@@ -1,23 +1,36 @@
+/**
+ * Boleto.js
+ * Archivo js que sirve como modelo de datos para el objeto Boleto
+ * @author: "La comunidad del anillo"
+ * Fecha: 13 - 11 - 2021
+ */
+
 const mongoose = require('mongoose');
 
 const boletoSchema = new mongoose.Schema(
     {
-        numero: { type: Number, required: true },
-        comprobantePago: { type: String },
-        tipoPago: { type: String },
-        estado: { type: String, required: true },
-        movimientoBoleto: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'movimientoBoleto',
-                autopopulate: true,
-            },
-        ],
-        persona: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'sorteo',
-            autopopulate: true,
+        numero: {type: Number, require},
+        comprobantePago: String,
+        estado:{
+            type:String,
+            enum:['LIBRE','APARTADO','PAGADO'],
+            dafault:'LIBRE'
         },
+        tipoPago:{
+            type:String,
+            enum:['PAYPAL','TRANSFERENCIA','EFECTIVO'],
+            default:'PAYPAL'
+        },        
+        movimientoBoleto: {
+            //TODO: Ver luego
+            fecha:Date,
+            descripcion:String
+        },
+        persona: {
+            nombre:String,
+            correo:String,
+            direccion:String
+                },
         cliente :{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'cliente',
