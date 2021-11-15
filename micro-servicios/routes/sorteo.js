@@ -43,7 +43,7 @@ router.get('/lista/:id', async (req,res)=>{
     const dataSorteo = await sorteoModel.findOne({_id:id})
     //Se utiliza el populate para ver el contenido del identificador en una sola consulta.
     .populate({path:"boletos",model:"boleto"})
-    .populate({path:"boletoGanador",model:"boleto"});;
+    .populate({path:"boletoGanador",model:"boleto"});
     //Se realiza una sentencia if para asegurar que el objeto encontrado no sea nulo
     if(dataSorteo != null || dataSorteo['boletos'] !== undefined)
     {

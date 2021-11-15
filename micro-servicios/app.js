@@ -10,8 +10,10 @@
 const express = require('express');
 //Middleware para interceptar las peticiones.
 const morgan = require("morgan");
-//Módulo de sorteo.
+//Módulo routing de sorteo.
 const sorteo = require("./routes/sorteo"); 
+//Módulo routing de numero
+const numero = require("./routes/numero");
 //Intercambio de recursos cruzado, realmente es un modulo para permisos.
 const cors = require("cors");
 //Se inicializa una constante llamada app para guardar los servicios de express
@@ -40,6 +42,8 @@ app.get("/", (req, res) => {
 
 //rutas
 app.use("/api/v1/sorteos",sorteo);
+app.use("/api/v1/numeros",numero);
+
 
 //Exportación del módulo.
 module.exports = app;
