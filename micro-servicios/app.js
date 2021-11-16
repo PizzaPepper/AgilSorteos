@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
 
 //rutas
 app.use("/api/v1/sorteos",sorteo);
-app.use("/api/v1/numeros",numero);
+app.use("/api/v1/reporte/numeros",numero);
 
 
 //Exportación del módulo.

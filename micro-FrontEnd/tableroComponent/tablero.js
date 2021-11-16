@@ -33,8 +33,10 @@ class Tablero extends HTMLElement{
         const sorteoId = this.getAttribute("sorteoId");
         const shadow = this.attachShadow({mode:'open'});
         this.#render(shadow);
-        this.#agregarEstilos(shadow);
-        await this.#agregarInfo(shadow,sorteoId)
+        this.#agregarEventoRegresar(shadow);
+        this.#agregarEstilos(shadow);        
+        await this.#agregarInfo(shadow,sorteoId);
+
     }
     /**
      * Método privado para pintar el html necesario para
@@ -126,7 +128,7 @@ class Tablero extends HTMLElement{
         const pDisp = shadow.querySelector("#pDisponibles");
         const pApar = shadow.querySelector('#pApartados');
         const pComp = shadow.querySelector('#pComprados');
-        const sorteo = await this.#consultarSorteo(sorteoId);        
+        const sorteo = await this.#consultarSorteo(sorteoId);
         fInicio.innerHTML = sorteo.fechaCreacion;
         nombre.innerHTML = sorteo.sorteo;
         fFinal.innerHTML = sorteo.fechaSorteo;
@@ -149,9 +151,8 @@ class Tablero extends HTMLElement{
     */
     #setBarraActual(shadow,Meta,Actual){
 
-        const porcen = (Actual/Meta) * 100
+        const porcen = ((Actual/Meta) * 100)
         const barraTotal = shadow.querySelector('#barraTotal');
-        console.log(porcen);
         barraTotal.style= `width: ${porcen}%`;
     }
 
@@ -194,6 +195,17 @@ class Tablero extends HTMLElement{
         shadow.appendChild(linkMater);
         shadow.appendChild(linkCSS);
         shadow.appendChild(scrAwes);
+    }
+
+    #agregarEventoRegresar(shadow){
+        const btnRegresar = shadow.getElementById("btnReturn");
+        btnRegresar.addEventListener("click",()=>this.#cambiarPantallaLista());
+    }
+    #cambiarPantallaLista(){
+        const lista = this.shadowRoot.host;
+        //Limpia el contenido
+        lista.shadowRoot.innerHTML = "";
+        lista.outerHTML = `<sorteos-lista></sorteos-lista>`;
     }
 }
 

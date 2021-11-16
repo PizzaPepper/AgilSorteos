@@ -105,12 +105,15 @@ class ListaSorteos extends HTMLElement {
  */
     #agregarEventos(shadow){        
         //Eventos Tablero
-        const botones = shadow.querySelectorAll(".btn-tablero");
-        botones.forEach(x=>{
-            x.addEventListener("click",(event)=>{this.#cambiarPantalla(event.path[0].value)});
+        const botonesTablero = shadow.querySelectorAll(".btn-tablero");
+        botonesTablero.forEach(x=>{
+            x.addEventListener("click",(event)=>{this.#cambiarPantallaTablero(event.path[0].value)});
         })
         //Eventos Reporte Numeros
-        //TODO: Hacer reportes de numeros
+        const botonesReporteNumeros = shadow.querySelectorAll(".btn-reporteNumeros");
+        botonesReporteNumeros.forEach(x=>{
+            x.addEventListener("click",(event)=>{this.#cambiarPantallaReporteNumeros(event.path[0].value)});
+        })
         //Eventos Reportes Deudores
         //TODO: Hacer reportes de deudores
         //Eventos Reportes Historial
@@ -164,15 +167,18 @@ class ListaSorteos extends HTMLElement {
  * en base al ide seleccionado pero nose bien como, el Eliu lo explicará despues.
  * @param {*} id 
  */
-    #cambiarPantalla(id){
+    #cambiarPantallaTablero(id){
         const lista = this.shadowRoot.host;
         //Limpia el contenido
         lista.shadowRoot.innerHTML = "";
         lista.outerHTML = `<sorteo-tablero sorteoId="${id}"></sorteo-tablero>`;
     }
-
-
-
+    #cambiarPantallaReporteNumeros(id){
+        const lista = this.shadowRoot.host;
+        //Limpia el contenido
+        lista.shadowRoot.innerHTML = "";
+        lista.outerHTML = `<reporte-numeros sorteoId="${id}"></reporte-numeros>`;
+    }    
 }
 
 window.customElements.define('sorteos-lista',ListaSorteos);
