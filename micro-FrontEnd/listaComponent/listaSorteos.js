@@ -85,7 +85,7 @@ class ListaSorteos extends HTMLElement {
         <li class="compSorteo list-group-item rounded-3 bg-gradient-info d-flex justify-content-between mb-1">
                     <div>
                         <figure>
-                            <img class="imgSorteo rounded float-start img-fluid max-height-100" id="imgSorteo" src="/micro-FrontEnd/listaComponent/img/Imagen.png" alt="">
+                            <img class="imgSorteo rounded float-start img-fluid max-height-100" id="imgSorteo" src="../micro-FrontEnd/listaComponent/img/Imagen.png" alt="">
                         </figure>
                     </div>
                     <div class="tituloElemento text-center ">
