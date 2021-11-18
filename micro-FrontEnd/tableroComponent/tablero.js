@@ -32,9 +32,9 @@ class Tablero extends HTMLElement{
     async connectedCallback() {
         const sorteoId = this.getAttribute("sorteoId");
         const shadow = this.attachShadow({mode:'open'});
+        this.#agregarEstilos(shadow);        
         this.#render(shadow);
         this.#agregarEventoRegresar(shadow);
-        this.#agregarEstilos(shadow);        
         await this.#agregarInfo(shadow,sorteoId);
 
     }
@@ -54,8 +54,8 @@ class Tablero extends HTMLElement{
                     <p id="FechaInicio">DD/MM/YYYY</p>
                 </div>
             </div>
-            <div class="d-flex justify-content-center">
-                <h1 id="nombreSorteo" class="text-white">SORTEO {Nombre}</h1>
+            <div class="">
+                <h1 id="nombreSorteo" class="text-white text-nowrap ">SORTEO {Nombre}</h1>
             </div>
             <div class="container justify-content-end">
                 <div class="text-white">
@@ -67,16 +67,16 @@ class Tablero extends HTMLElement{
     </header>
     <main>
         <div id="tablero" class="container p-4"> 
-            <div id="porcentaje" class="progress h-auto">
+            <div id="porcentaje" class="progress h-auto position-relative">
                 <!-- Textos inicio -->
                 <div class="position-absolute d-inline-flex w-100 align-self-center" >
-                    <div class="text-center w-40">
+                    <div class="text-center w-50">
                         <h1 id="dineroActual" >$500.00</h1>
                         <p class="text-dark" >Recaudancion Actual</p>
                     </div>
                     <div  class="w-40 text-center">
                         <h1 id="dineroMeta">$1000.00</h1>
-                        <p class="text-dark">Recaudacion Deseado</p>
+                        <p class="text-dark">Recaudacion Total</p>
                     </div>
                 </div>
                 <div id="barraTotal" class="progress-bar progress-bar-striped bg-success rounded-3 min-height-150 " role="progressbar" style="width: 50%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" >

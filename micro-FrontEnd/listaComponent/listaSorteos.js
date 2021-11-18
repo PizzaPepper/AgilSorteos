@@ -30,12 +30,12 @@ class ListaSorteos extends HTMLElement {
  */
     async connectedCallback() {
         const shadow = this.attachShadow({mode:'open'});
+        this.#agregarEstilos(shadow);
         this.#render(shadow);
         const data = await this.#agregarSorteos(shadow);
        
         this.#listarSorteos(shadow,data);
         this.#agregarEventos(shadow);
-        this.#agregarEstilos(shadow);
     }
     /**
      * método privado para pintar el esquema HTML que se utilizará como base.
@@ -89,7 +89,7 @@ class ListaSorteos extends HTMLElement {
                         </figure>
                     </div>
                     <div class="tituloElemento text-center ">
-                        <h2 class="text-white">${data.titulo}</h2> <h3 class="text-light">${data.estadoSorteo}</h3>
+                        <h3 class="text-white">${data.titulo}</h3> <h4 class="text-light">${data.estadoSorteo}</h4>
                     </div>
                     <div class="botoneraElemento pt-4">
                         <button type="button" class="btn-tablero btn btn-primary btn-sm p-3" value="${data._id}" >Tablero</button>

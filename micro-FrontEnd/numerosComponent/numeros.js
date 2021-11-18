@@ -38,7 +38,6 @@ class ReporteNumeros extends HTMLElement{
         const shadow = this.attachShadow({mode:'open'});
         this.#render(shadow);
         this.#agregarEstilos(shadow);
-        this.#agregarEstilos(shadow);
         this.#agregarNumeros(shadow,sorteoId,"TODOS");
         this.#agregarTitulo(shadow,sorteoId); 
         this.#agregarEventosBotones(shadow,sorteoId);
