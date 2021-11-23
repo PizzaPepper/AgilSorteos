@@ -162,7 +162,7 @@ class Tablero extends HTMLElement{
     */
     async #consultarSorteo(sorteoId){
         return await fetch(this.#urlSorteos+sorteoId, this.#configFetch)
-        .then(response => response.json());    
+        .then(response => response.json());
     }
     /**
     * Método encargado de añadir los estilos CSS a el #render.

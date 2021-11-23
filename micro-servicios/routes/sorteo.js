@@ -59,9 +59,10 @@ router.get('/lista/:id', async (req,res)=>{
             let formatted_date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
             return formatted_date;
         };        
-        ///Se crea un JSON con el objeto que se acaba de obtener
+        ///Se crea un JSON con el objeto que se acaba de obtener y calculando los datos necesarios.
         const sorteo = {
             sorteo: dataSorteo.titulo,
+            precioBoleto:dataSorteo.precioNumeros,
             dineroActual: dataSorteo.precioNumeros*pagados,
             dineroMeta: dataSorteo.precioNumeros*totales,
             fechaCreacion: formatDate(dataSorteo.fechaCreacion),
