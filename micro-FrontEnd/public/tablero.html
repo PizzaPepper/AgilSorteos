@@ -42,8 +42,23 @@
         </nav>
     </header>
     <main>
+        <!-- <div class="container p-4 bg-info navbar ">
+            <div class="text-white  justify-content-start">
+                <p>Fecha Inicio:</p>
+                <p id="FechaInicio">DD/MM/YYYY</p>
+            </div>
+            <div class="text-white  justify-content-center">
+                <p>Costo Boleto:</p>
+                <p id="precioBoleto">50$</p>
+            </div>
+            <div class="text-white  justify-content-end">
+                <p>Fecha Final:</p>
+                <p id="FechaFinal">DD/MM/YYYY</p>
+            </div>
+        </div> -->
+
         <div id="tablero" class="container p-4"> 
-            <div id="porcentaje" class="progress h-auto">
+            <div id="porcentaje" class="position-relative progress h-auto">
                 <!-- Textos inicio -->
                 <div class="position-absolute d-sm-inline-flex w-100 align-self-center" >
                     <div class="text-center w-40">
@@ -61,7 +76,16 @@
             </div>
             <div>
 
-            <div id="registroBoletos" class="container text-center   d-inline-flex pt-7">
+                <div class="inline mt-3  border-dashed">
+                    <div class="text-center position-relative ">
+                        <h2 class="position-absolute pt-5 d-inline-flex ">$50</h2>
+                        <figure>
+                            <img class="img-fluid max-height-150" src="./img/ticket.png" >
+                        </figure>
+                    </div>
+                </div>
+
+            <div id="registroBoletos" class="container text-center   d-inline-flex pt-4">
                 <div id="boletosTotales" class="w-25 rounded-3   bg-success height-300">
                     <div class="pt-7">
                         <h2 class="pb-4 ">Totales<h2>
