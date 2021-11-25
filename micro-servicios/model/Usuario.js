@@ -14,7 +14,7 @@ const Usuario = {
     correo:String,
     numeroDeContacto:String,
     direccion:String,
-    boletos:[{type: mongoose.Schema.Types.ObjectId, ref:Boleto}]
+    entidad:String
 };
 
 module.exports = Usuario;

@@ -29,7 +29,6 @@ const sorteoSchema = new mongoose.Schema({
         ref: 'boleto',
         autopopulate: true,
     },
-    //Que se lo deje ahí
     boletos: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'boleto',

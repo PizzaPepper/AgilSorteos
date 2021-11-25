@@ -33,7 +33,7 @@ class ListaSorteos extends HTMLElement {
         this.#agregarEstilos(shadow);
         this.#render(shadow);
         const data = await this.#agregarSorteos(shadow);
-       
+        console.log(data);
         this.#listarSorteos(shadow,data);
         this.#agregarEventos(shadow);
     }
@@ -55,10 +55,14 @@ class ListaSorteos extends HTMLElement {
     </header>
     <main class="bg-gray-200">
         <div  class="container p-4" >
-            <ul id="lista" class="sorteo list-group ">
-                
-                
-            </ul>
+        <select class="form-select ps-2 text-2xl" >
+                <option value="TODOS" selected>Todos</option>
+                <option value="VIGENTE">Vigente</option>
+                <option value="FINALIZADO">Finalizado</option>
+        </select>
+            <br>
+        <ul id="lista" class="sorteo list-group ">
+        </ul>
         </div>
     </main>
     `;
@@ -89,7 +93,7 @@ class ListaSorteos extends HTMLElement {
                         </figure>
                     </div>
                     <div class="tituloElemento text-center ">
-                        <h3 class="text-white">${data.titulo}</h3> <h4 class="text-light">${data.estadoSorteo}</h4>
+                        <h3 class="text-white m-0">${data.titulo}</h3> <h4 class="text-light m-0">${data.estadoSorteo}</h4> <h5 class="text-light m-0">$${data.precioNumeros}</h5>
                     </div>
                     <div class="botoneraElemento pt-4">
                         <button type="button" class="btn-tablero btn btn-primary btn-sm p-3" value="${data._id}" >Tablero</button>

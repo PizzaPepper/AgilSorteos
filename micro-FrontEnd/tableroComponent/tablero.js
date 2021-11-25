@@ -71,11 +71,11 @@ class Tablero extends HTMLElement{
                 <!-- Textos inicio -->
                 <div class="position-absolute d-inline-flex w-100 align-self-center" >
                     <div class="text-center w-50">
-                        <h1 id="dineroActual" >$500.00</h1>
+                        <h1 id="dineroActual" >$0</h1>
                         <p class="text-dark" >Recaudancion Actual</p>
                     </div>
                     <div  class="w-40 text-center">
-                        <h1 id="dineroMeta">$1000.00</h1>
+                        <h1 id="dineroMeta">$0</h1>
                         <p class="text-dark">Recaudacion Total</p>
                     </div>
                 </div>
@@ -84,27 +84,32 @@ class Tablero extends HTMLElement{
             </div>
             <div>
 
-            <div id="registroBoletos" class="container text-center   d-inline-flex pt-7">
-                <div id="boletosTotales" class="w-25 rounded-3   bg-success height-300">
-                    <div class="pt-7">
+            <div class="pt-1 position-relative d-flex align-content-center justify-content-center" >
+                            <h3  id="pBoleto" class="position-absolute pt-5 text-white-50">$0</h3>
+                            <img class="max-height-150" src="../../micro-FrontEnd/tableroComponent/img/ticket.png">
+            </div>
+
+            <div id="registroBoletos" class="container text-center   d-inline-flex pt-2">
+                <div id="boletosTotales" class="w-25 rounded-3   bg-success height-200">
+                    <div class="pt-5">
                         <h2 class="pb-4 ">Totales<h2>
                         <h3 id="pTotales">0</h3>
                     </div>
                 </div>
-                <div id="boletosDisponibles" class="w-25 rounded-3  bg-info height-300">
-                    <div class="pt-7">
+                <div id="boletosDisponibles" class="w-25 rounded-3  bg-info height-200">
+                    <div class="pt-5">
                         <h2 class="pb-4">Disponibles<h2>
                         <h3 id="pDisponibles">0</h3>
                     </div>
                 </div>
-                <div id="boletosApartados" class="w-25 rounded-3  bg-warning height-300">
-                    <div class="pt-7">
+                <div id="boletosApartados" class="w-25 rounded-3  bg-warning height-200">
+                    <div class="pt-5">
                         <h2 class="pb-4">Apartados<h2>
                         <h3 id="pApartados">0</h3>
                     </div>
                 </div>
-                <div id="boletosComprados" class="w-25 rounded-3  bg-secondary height-300">
-                    <div class="pt-7" >
+                <div id="boletosComprados" class="w-25 rounded-3  bg-secondary height-200">
+                    <div class="pt-5" >
                         <h2 class="pb-4">Comprados<h2>
                         <h3 id="pComprados" >0</h3>
                     </div>
@@ -128,7 +133,9 @@ class Tablero extends HTMLElement{
         const pDisp = shadow.querySelector("#pDisponibles");
         const pApar = shadow.querySelector('#pApartados');
         const pComp = shadow.querySelector('#pComprados');
+        const pBole = shadow.querySelector("#pBoleto");
         const sorteo = await this.#consultarSorteo(sorteoId);
+       
         fInicio.innerHTML = sorteo.fechaCreacion;
         nombre.innerHTML = sorteo.sorteo;
         fFinal.innerHTML = sorteo.fechaSorteo;
@@ -137,7 +144,8 @@ class Tablero extends HTMLElement{
         pTotal.innerHTML = sorteo.totales;
         pDisp.innerHTML = sorteo.disponibles;
         pApar.innerHTML = sorteo.apartados;
-        pComp.innerHTML = sorteo.pagados;        
+        pComp.innerHTML = sorteo.pagados;
+        pBole.innerHTML = "$"+sorteo.precioBoleto;        
 
         const Meta = sorteo.totales;
         const Actual = sorteo.pagados;
@@ -150,7 +158,6 @@ class Tablero extends HTMLElement{
     * actual mediante la formula: "(Xa / Xf) * 100"
     */
     #setBarraActual(shadow,Meta,Actual){
-
         const porcen = ((Actual/Meta) * 100)
         const barraTotal = shadow.querySelector('#barraTotal');
         barraTotal.style= `width: ${porcen}%`;
