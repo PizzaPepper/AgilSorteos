@@ -32,6 +32,62 @@ router.get('/lista', async (req,res)=>{
     .populate({path:"boletoGanador",model:"boleto"});
     res.json(data);
 });
+/**
+ * Este método se encarga de obtener la lista de sorteos
+ * y filtrar solo los sorteos con el estado: 'VIGENTE' para devolverlos en un json
+ */
+router.get('/listaVigentes', async(req,res)=>{
+    const data = await sorteoModel.find()
+    .populate({path:"boletos",model:"boleto"})
+    .populate({path:"boletoGanador",model:"boleto"});
+    if(data != null)
+    {
+        const sorteosVigentes = data.filter(x => x.estadoSorteo == "VIGENTE");
+        res.status(201).json(sorteosVigentes);
+    }   
+    else
+    {
+        res.status(401).json({message:"Recurso no encontrado"});
+    }
+});
+
+/**
+ * Este método se encarga de obtener la lista de sorteos
+ * y filtrar solo los sorteos con el estado: 'TERMINADO' para devolverlos en un json
+ */
+router.get('/listaTerminados', async(req,res)=>{
+    const data = await sorteoModel.find()
+    .populate({path:"boletos",model:"boleto"})
+    .populate({path:"boletoGanador",model:"boleto"});
+    if(data != null)
+    {
+        const sorteosVigentes = data.filter(x => x.estadoSorteo == "TERMINADO");
+        res.status(201).json(sorteosVigentes);
+    }   
+    else
+    {
+        res.status(401).json({message:"Recurso no encontrado"});
+    }
+});
+/**
+ * Este método se encarga de obtener la lista de sorteos
+ * y filtrar solo los sorteos con el estado: 'TERMINADO' para devolverlos en un json
+ */
+router.get('/listaEspera', async(req,res)=>{
+    const data = await sorteoModel.find()
+    .populate({path:"boletos",model:"boleto"})
+    .populate({path:"boletoGanador",model:"boleto"});
+    if(data != null)
+    {
+        const sorteosVigentes = data.filter(x => x.estadoSorteo == "ESPERA");
+        res.status(201).json(sorteosVigentes);
+    }   
+    else
+    {
+        res.status(401).json({message:"Recurso no encontrado"});
+    }
+});
+
 
 /**
  * Este método se encarga de recibir la petición HTTP GET pero con un id en la URL

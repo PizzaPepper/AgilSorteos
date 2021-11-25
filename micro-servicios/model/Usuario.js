@@ -8,13 +8,14 @@
 const mongoose = require('mongoose');
 const Boleto = require('./Boleto');
 
-const Usuario = {
+const Usuario = {    
     nombre:String,
-    contrasenia:String,
+    contrasena:String,
     correo:String,
-    numeroDeContacto:String,
     direccion:String,
-    entidad:String
+    numeroTelefono:String,
+    ciudad:String,
+    entidad:String    
 };
 
 module.exports = Usuario;
