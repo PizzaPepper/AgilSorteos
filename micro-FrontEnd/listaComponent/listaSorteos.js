@@ -12,7 +12,7 @@
  * se configuran diversos elementos como el Fetch para los permisos.
  */
 class ListaSorteos extends HTMLElement {
-    #urlSorteos = 'http://localhost:3312/api/v1/sorteos/lista';
+    #urlSorteos = 'http://localhost:3312/api/v1/sorteos/';
     #configFetch = {
         method: 'GET', 
         mode: 'cors',
@@ -32,10 +32,8 @@ class ListaSorteos extends HTMLElement {
         const shadow = this.attachShadow({mode:'open'});
         this.#agregarEstilos(shadow);
         this.#render(shadow);
-        const data = await this.#agregarSorteos(shadow);
-        console.log(data);
+        const data = await this.#obtenerSorteos();
         this.#listarSorteos(shadow,data);
-        this.#agregarEventos(shadow);
     }
     /**
      * método privado para pintar el esquema HTML que se utilizará como base.
@@ -54,11 +52,12 @@ class ListaSorteos extends HTMLElement {
         </nav>
     </header>
     <main class="bg-gray-200">
-        <div  class="container p-4" >
-        <select class="form-select ps-2 text-2xl" >
-                <option value="TODOS" selected>Todos</option>
-                <option value="VIGENTE">Vigente</option>
-                <option value="FINALIZADO">Finalizado</option>
+        <div  class="container p-4 overflow-y-scroll height-500" >
+        <select id="comboFiltro" class="form-select ps-2 text-2xl" >
+            <option value="TODOS" selected>Todos</option>
+            <option value="VIGENTE">Vigente</option>
+            <option value="TERMINADO">Terminado</option>
+            <option value="ESPERA">Espera</option>
         </select>
             <br>
         <ul id="lista" class="sorteo list-group ">
@@ -73,9 +72,12 @@ class ListaSorteos extends HTMLElement {
  */
     #listarSorteos(shadow,data){
         const ulID = shadow.getElementById('lista');
+        ulID.innerHTML = "";
         for(const x of data){
             ulID.innerHTML+=this.#setTemplate(x);
-        };        
+        };   
+
+        this.#agregarEventos(shadow);     
     }
 
     /**
@@ -107,7 +109,11 @@ class ListaSorteos extends HTMLElement {
  * elemento de la lista.
  * @param {*} shadow shadow DOM
  */
-    #agregarEventos(shadow){        
+    #agregarEventos(shadow){  
+        //Eventos Lista
+        const combo = shadow.querySelector("#comboFiltro");
+        combo.addEventListener("change",(event)=> this.#ManejadorFiltro(shadow,event.target.value));
+        
         //Eventos Tablero
         const botonesTablero = shadow.querySelectorAll(".btn-tablero");
         botonesTablero.forEach(x=>{
@@ -162,9 +168,31 @@ class ListaSorteos extends HTMLElement {
  * en una cosntante llamada "data".
  * @param {*} shadow 
  */
-    async #agregarSorteos() {
-        return await fetch(this.#urlSorteos,this.#configFetch)
+    async #obtenerSorteos(filtro="lista") {
+        return await fetch(this.#urlSorteos+filtro,this.#configFetch)
         .then(response=> response.json());
+    }
+
+    async #ManejadorFiltro(shadow,filtro){
+        let data = null
+        switch(filtro){
+            case "TODOS":
+                data = await this.#obtenerSorteos("lista");
+            break;
+            case "VIGENTE":
+                data = await this.#obtenerSorteos("listaVigentes");
+            break;
+            case "TERMINADO":
+                data = await this.#obtenerSorteos("listaTerminados");
+                break;
+            case "ESPERA":
+                data = await this.#obtenerSorteos("listaEspera");
+                break;
+            default:
+                alert("Filtro Desconocido");
+                return
+        }
+        this.#listarSorteos(shadow,data);
     }
 /**
  * Se supone que cambia de pantalla pero realmente pinta una nueva pantalla
@@ -177,6 +205,7 @@ class ListaSorteos extends HTMLElement {
         lista.shadowRoot.innerHTML = "";
         lista.outerHTML = `<sorteo-tablero sorteoId="${id}"></sorteo-tablero>`;
     }
+
     #cambiarPantallaReporteNumeros(id){
         const lista = this.shadowRoot.host;
         //Limpia el contenido

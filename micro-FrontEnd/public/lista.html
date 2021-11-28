@@ -9,57 +9,129 @@
   <title>
     Lista de sorteos
   </title>
-     <!--     Fonts and icons     -->
-     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-     <!-- Nucleo Icons -->
-     <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
-     <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
-     <!-- Font Awesome Icons -->
-     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-     <!-- Material Icons -->
-     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-     <!-- CSS Files -->
-     <link id="pagestyle" href="./assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <!-- Nucleo Icons -->
+  <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <!-- CSS Files -->
+  <link id="pagestyle" href="./assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
 </head>
 
-<body >
-    <header>
-        <nav class="navbar navbar-expand-lg  bg-gradient-faded-info">
-            <div class="container d-flex justify-content-center">
-                <h1 class="text-white">SORTEOS</h1>
-            </div>
-            <div class="container position-absolute d-flex justify-content-end">
-                <button id="btnHistorico" type="button" class="btn btn-secondary btn-sm">Generar reporte <br> historico</button>
-            </div>
-        </nav>
-    </header>
-    <main class="bg-gray-200">
-        <div  class="container p-4" >
-            <select class="form-select ps-2 text-2xl" >
-                <option value="TODOS" selected>Todos</option>
-                <option value="VIGENTE">Vigente</option>
-                <option value="FINALIZADO">Finalizado</option>
-              </select>
-              <br>
-            <ul id="lista" class="sorteo list-group ">
-                <li class="compSorteo list-group-item rounded-3 bg-gradient-info d-flex justify-content-between mb-1">
-                    <div>
-                        <figure>
-                            <img class="imgSorteo rounded float-start img-fluid max-height-100" id="imgSorteo" src="./img/Imagen.png" alt="">
-                        </figure>
-                    </div>
-                    <div class="tituloElemento text-center ">
-                        <h2 class="text-white">Nombre sorteo</h2> <h3 class="text-light">Vigente</h3>
-                    </div>
-                    <div class="botoneraElemento pt-4">
-                        <button type="button" class="btn btn-primary btn-sm p-3">Tablero</button>
-                        <button type="button" class="btn btn-primary btn-sm">Generar<br> reporte Números</button>
-                        <button type="button" class="btn btn-primary btn-sm">Generar <br> reporte deudores</button>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </main>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg  bg-gradient-faded-info">
+      <div class="container d-flex justify-content-center">
+        <h1 class="text-white">SORTEOS</h1>
+      </div>
+      <div class="container position-absolute d-flex justify-content-end">
+        <button id="btnHistorico" type="button" class="btn btn-secondary btn-sm">Generar reporte <br> historico</button>
+      </div>
+    </nav>
+  </header>
+  <main class="bg-gray-200 ">
+    <div class="container p-4 overflow-y-scroll height-500">
+      <select class="form-select ps-2 text-2xl">
+        <option value="TODOS" selected>Todos</option>
+        <option value="VIGENTE">Vigente</option>
+        <option value="TERMINADO">Terminado</option>
+        <option value="ESPERA">Espera</option>
+      </select>
+      <br>
+      <ul id="lista" class="sorteo list-group ">
+        <li class="compSorteo list-group-item rounded-3 bg-gradient-info d-flex justify-content-between mb-1">
+          <div>
+            <figure>
+              <img class="imgSorteo rounded float-start img-fluid max-height-100" id="imgSorteo" src="./img/Imagen.png"
+                alt="">
+            </figure>
+          </div>
+          <div class="tituloElemento text-center ">
+            <h2 class="text-white">Nombre sorteo</h2>
+            <h3 class="text-light">Vigente</h3>
+          </div>
+          <div class="botoneraElemento pt-4">
+            <button type="button" class="btn btn-primary btn-sm p-3">Tablero</button>
+            <button type="button" class="btn btn-primary btn-sm">Generar<br> reporte Números</button>
+            <button type="button" class="btn btn-primary btn-sm">Generar <br> reporte deudores</button>
+          </div>
+        </li>
+        <li class="compSorteo list-group-item rounded-3 bg-gradient-info d-flex justify-content-between mb-1">
+          <div>
+            <figure>
+              <img class="imgSorteo rounded float-start img-fluid max-height-100" id="imgSorteo" src="./img/Imagen.png"
+                alt="">
+            </figure>
+          </div>
+          <div class="tituloElemento text-center ">
+            <h2 class="text-white">Nombre sorteo</h2>
+            <h3 class="text-light">Vigente</h3>
+          </div>
+          <div class="botoneraElemento pt-4">
+            <button type="button" class="btn btn-primary btn-sm p-3">Tablero</button>
+            <button type="button" class="btn btn-primary btn-sm">Generar<br> reporte Números</button>
+            <button type="button" class="btn btn-primary btn-sm">Generar <br> reporte deudores</button>
+          </div>
+        </li>
+        <li class="compSorteo list-group-item rounded-3 bg-gradient-info d-flex justify-content-between mb-1">
+          <div>
+            <figure>
+              <img class="imgSorteo rounded float-start img-fluid max-height-100" id="imgSorteo" src="./img/Imagen.png"
+                alt="">
+            </figure>
+          </div>
+          <div class="tituloElemento text-center ">
+            <h2 class="text-white">Nombre sorteo</h2>
+            <h3 class="text-light">Vigente</h3>
+          </div>
+          <div class="botoneraElemento pt-4">
+            <button type="button" class="btn btn-primary btn-sm p-3">Tablero</button>
+            <button type="button" class="btn btn-primary btn-sm">Generar<br> reporte Números</button>
+            <button type="button" class="btn btn-primary btn-sm">Generar <br> reporte deudores</button>
+          </div>
+        </li>
+        <li class="compSorteo list-group-item rounded-3 bg-gradient-info d-flex justify-content-between mb-1">
+          <div>
+            <figure>
+              <img class="imgSorteo rounded float-start img-fluid max-height-100" id="imgSorteo" src="./img/Imagen.png"
+                alt="">
+            </figure>
+          </div>
+          <div class="tituloElemento text-center ">
+            <h2 class="text-white">Nombre sorteo</h2>
+            <h3 class="text-light">Vigente</h3>
+          </div>
+          <div class="botoneraElemento pt-4">
+            <button type="button" class="btn btn-primary btn-sm p-3">Tablero</button>
+            <button type="button" class="btn btn-primary btn-sm">Generar<br> reporte Números</button>
+            <button type="button" class="btn btn-primary btn-sm">Generar <br> reporte deudores</button>
+          </div>
+        </li>
+        <li class="compSorteo list-group-item rounded-3 bg-gradient-info d-flex justify-content-between mb-1">
+          <div>
+            <figure>
+              <img class="imgSorteo rounded float-start img-fluid max-height-100" id="imgSorteo" src="./img/Imagen.png"
+                alt="">
+            </figure>
+          </div>
+          <div class="tituloElemento text-center ">
+            <h2 class="text-white">Nombre sorteo</h2>
+            <h3 class="text-light">Vigente</h3>
+          </div>
+          <div class="botoneraElemento pt-4">
+            <button type="button" class="btn btn-primary btn-sm p-3">Tablero</button>
+            <button type="button" class="btn btn-primary btn-sm">Generar<br> reporte Números</button>
+            <button type="button" class="btn btn-primary btn-sm">Generar <br> reporte deudores</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </main>
   <!--   Core JS Files   -->
   <script src="./assets/js/core/popper.min.js"></script>
   <script src="./assets/js/core/bootstrap.min.js"></script>

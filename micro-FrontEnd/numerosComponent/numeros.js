@@ -148,7 +148,7 @@ class ReporteNumeros extends HTMLElement{
                 alert("Tipo de ordenamiento desconocido");
                 return;
         }
-
+        console.log(dataNumeros);
             dataNumeros.forEach(e=>{
                 this.#agregarFila(filas,e);
             });
@@ -172,7 +172,7 @@ class ReporteNumeros extends HTMLElement{
 
         div.innerHTML += `
         <tr>
-        <td scope="row">${dataNumero.numero}</td>
+        <td scope="row">${dataNumero.numero} ${dataNumero.nombreCliente != null ? dataNumero.nombreCliente: ""}</td>
         ${tag}
         </tr>
         `;

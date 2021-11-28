@@ -12,6 +12,7 @@
 
 const sorteoModel = require('../model/Sorteo');
 const boletoModel = require('../model/Boleto');
+const clienteModel = require('../model/Cliente');
 
 const router = Router();
 
@@ -35,19 +36,37 @@ router.get('/nombreSorteo/:id',async(req,res)=>{
 router.get('/todos/:id', async(req,res)=>{    
     const id = req.params.id;
     const dataSorteo = await sorteoModel.findOne({_id:id})
-    .populate({path:"boletos",model:"boleto"});    
+    .populate({
+        path:"boletos",
+        populate:{path:"cliente"}
+    });
+    
     if(dataSorteo != null || dataSorteo['boletos'] !== undefined)
     {
         let dataBoletos = dataSorteo.boletos;
         let auxBoletos = [];
+        
+        
         for(x of dataBoletos)
         {
-            let auxBoleto =
+            let auxBoleto;
+            if(x.cliente!=null){
+                auxBoleto =
             {
                 id: x._id,
                 numero: x.numero,
-                estado: x.estado
+                estado: x.estado,
+                nombreCliente: x.cliente.nombre
+            };
+            }else{
+                auxBoleto =
+            {
+                id: x._id,
+                numero: x.numero,
+                estado: x.estado,
+            };
             }
+            
             auxBoletos.push(auxBoleto);
         }
         const listaBoletos = auxBoletos;
@@ -64,7 +83,10 @@ router.get('/todos/:id', async(req,res)=>{
 router.get('/apartados/:id', async (req,res)=>{
     const id = req.params.id;
     const dataSorteo = await sorteoModel.findOne({_id:id})
-    .populate({path:"boletos",model:"boleto"});    
+    .populate({
+        path:"boletos",
+        populate:{path:"cliente"}
+    }); 
     if(dataSorteo != null || dataSorteo['boletos'] !== undefined)
     {       
         //Se realiza el filtrado de los números que tengan el estado apartado.
@@ -78,7 +100,8 @@ router.get('/apartados/:id', async (req,res)=>{
             {
                 id: x._id,
                 numero: x.numero,
-                estado: x.estado
+                estado: x.estado,
+                nombreCliente: x.cliente.nombre
             }
             auxBoletosA.push(auxBoleto);
         }
@@ -115,7 +138,8 @@ router.get('/pagados/:id', async (req,res)=>{
             {
                 id: x._id,
                 numero: x.numero,
-                estado: x.estado
+                estado: x.estado,
+                nombreCliente: x.cliente.nombre
             }
             auxBoletosP.push(auxBoleto);
         }
