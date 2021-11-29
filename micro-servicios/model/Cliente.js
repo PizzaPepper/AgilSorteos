@@ -14,7 +14,7 @@ const clienteSchema = new mongoose.Schema({
     direccion:String,
     numeroTelefono:String,
     ciudad:String,
-    entidad:String    
+    entidad:String
 });
 
 const clienteModel = mongoose.model('cliente',clienteSchema);

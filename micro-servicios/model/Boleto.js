@@ -29,7 +29,10 @@ const boletoSchema = new mongoose.Schema(
         persona: {
             nombre:String,
             correo:String,
-            direccion:String
+            direccion:String,
+            numTelefono:String,
+            ciudad:String,
+            entidad:String
                 },
         cliente :{
             type: mongoose.Schema.Types.ObjectId,
