@@ -12,8 +12,10 @@ const express = require('express');
 const morgan = require("morgan");
 //Módulo routing de sorteo.
 const sorteo = require("./routes/sorteo"); 
-//Módulo routing de numero
+//Módulo routing de número
 const numero = require("./routes/numero");
+//Módulo routing de cliente
+const cliente = require("./routes/cliente");
 //Intercambio de recursos cruzado, realmente es un modulo para permisos.
 const cors = require("cors");
 //Se inicializa una constante llamada app para guardar los servicios de express
@@ -43,6 +45,7 @@ app.get("/", (req, res) => {
 //rutas
 app.use("/api/v1/sorteos",sorteo);
 app.use("/api/v1/reporte/numeros",numero);
+app.use("/api/v1/reporte/clientes", cliente);
 
 
 //Exportación del módulo.

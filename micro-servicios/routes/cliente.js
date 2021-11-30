@@ -24,24 +24,30 @@ const clienteModel = require('../model/Cliente');
 //Se importa el modulo Router para la manipulación de las peticiones HTTP
 const router = Router();
 
-router.get('/todos/:id', (req, res)=>{
+/**
+ * Método que recibe una petición HTTP GET que regresa un json con los
+ * clientes de los boletos con boletos con el estado pagado o apartado.
+ */
+router.get('/todos/:id',async(req, res)=>{
     const id = req.params.id;
     const dataSorteo = await sorteoModel.findOne({_id:id})
     .populate({
         path:"boletos",
         populate:{path:"cliente"}
     });
-    const formatDate = (date)=>{
-        let formatted_date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
-        return formatted_date;
-    }
-
     if(dataSorteo != null || dataSorteo['boletos'] !== undefined)
     {
         let dataBoletos = dataSorteo.boletos;
+        //Lista auxiliar para guardar los nuevos jsons.
         let auxClientes = [];
+            //Se crea una función ánonima para darle un formato especifico a la fecha para ser exacto "DD/MM/AAAA"
+        const formatDate = (date)=>{
+            let formatted_date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+            return formatted_date;
+        };        
         for(x of dataBoletos)
         {
+            console.log(x.movimientoBoleto.fecha);
             let auxCliente;
             if(x.cliente != null)
             {
@@ -52,50 +58,77 @@ router.get('/todos/:id', (req, res)=>{
                     nombreCliente: x.cliente.nombre,
                     fechaMovimiento: formatDate(x.movimientoBoleto.fecha)
                 }
+                auxClientes.push(auxCliente);
             }
         }
+        const listaClientes = auxClientes;
+        res.status(201).json(listaClientes);
+    }
+    else
+    {
+        res.status(401).json({message:"No se ha encontrado el elemento"});
     }
 });
 
-router.get('/apartados/:id',(req,res) =>{
+/**
+ * Método que recibe una petición HTTP GET con el ID de un sorteo y este regresa un json
+ * con los clientes que tengan un boleto con el estado apartado.
+ */
+router.get('/apartados/:id',async(req,res) =>{
     const id = req.params.id;
     const dataSorteo = await sorteoModel.findOne({_id:id})
     .populate({
         path:"boletos",
         populate:{path:"cliente"}
     });
-    const diasDePlazo = (1000 * 60 * 25 * dataSorteo.diasLimiteApartado);
     if(dataSorteo != null || dataSorteo['boletos'] !== undefined)
     {
-        //Pequeño método para dar formato a una fecha.
+        /*Esta es una constante para calcular la cantidad de dias que se le sumarán
+        a la fecha de apartado en milisegundos.*/
+        const diasDePlazo = (1000 * 60 * 60 * 24 * dataSorteo.diasLimiteApartado);
+        //Se crea una función ánonima para darle un formato especifico a la fecha para ser exacto "DD/MM/AAAA"
         const formatDate = (date)=>{
             let formatted_date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
             return formatted_date;
         }
+        //Filtramos los boletos apartados.
         const boletosApartados = dataSorteo.boletos.filter(x => x.estado=="APARTADO");
         let auxClientes = [];
-
-        for(x of dataBoletos)
+        for(x of boletosApartados)
         {            
             let auxCliente;
             if(x.cliente != null)
             {
-                //Se le suman los dias de plazo que se tengan.
-                let suma = x.movimientoBoleto.fecha.getTime() + diasDePlazo;
+                /*Se le suman los dias de plazo en milisegundos a la fecha de
+                apartados en milisegundos lo cual nos daria la fecha donde se aparto + 5 días*/
+                let suma = (x.movimientoBoleto.fecha.getTime() + diasDePlazo);
+                //Representa la fecha límite de pago.
                 let diaPago = new Date(suma);
+
+                var contador = 0;
+                //Se crea un objeto(JSON) para enviar los datos que nos son de relevancia.
                 auxCliente =
                 {
                     numero: x.numero,
                     estado: x.estado,
                     nombreCliente: x.cliente.nombre,
                     fechaMovimiento: formatDate(x.movimientoBoleto.fecha),
-                    fechaPago: formatDate(diaPago)
+                    fechaVencimiento: formatDate(diaPago)
                 }
-                auxClientes.push(auxCliente);
+                auxClientes.push(auxCliente);                
             }
         }
+        //Se calcula la cantidad de deuda en ese sorteo.
+        const adeudoTotal = dataSorteo.precioNumeros * auxClientes.length;
+        //Se crea una constante con la lista final, la cantidad de deuda y el número de deudores.
+        const listaClientes = {clientes:auxClientes,adeudoTotal:adeudoTotal,numDeudores:auxClientes.length};
+        //Se envia esa constante como respuesta.
+        res.status(201).json(listaClientes);
     }
-
+    else
+    {
+        res.status(401).json({message:"No se ha encontrado el elemento"});
+    }
 });
 
 module.exports = router;
