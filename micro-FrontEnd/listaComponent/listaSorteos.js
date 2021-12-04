@@ -76,7 +76,6 @@ class ListaSorteos extends HTMLElement {
         for(const x of data){
             ulID.innerHTML+=this.#setTemplate(x);
         };   
-
         this.#agregarEventos(shadow);     
     }
 
@@ -118,14 +117,18 @@ class ListaSorteos extends HTMLElement {
         const botonesTablero = shadow.querySelectorAll(".btn-tablero");
         botonesTablero.forEach(x=>{
             x.addEventListener("click",(event)=>{this.#cambiarPantallaTablero(event.path[0].value)});
-        })
+        });
         //Eventos Reporte Numeros
         const botonesReporteNumeros = shadow.querySelectorAll(".btn-reporteNumeros");
         botonesReporteNumeros.forEach(x=>{
             x.addEventListener("click",(event)=>{this.#cambiarPantallaReporteNumeros(event.path[0].value)});
-        })
+        });
         //Eventos Reportes Deudores
-        //TODO: Hacer reportes de deudores
+        const botonesReporteDeudores = shadow.querySelectorAll(".btn-reporteDeudores");
+        botonesReporteDeudores.forEach(x=>{
+            x.addEventListener("click",(event)=>{this.#cambiarPantallaReporteDeudores(event.path[0].value)});
+        });
+
         //Eventos Reportes Historial
         //TODO: Hacer reportes de Historial
     }
@@ -133,8 +136,7 @@ class ListaSorteos extends HTMLElement {
  * Método encargado de dar el estilo CSS a los elemtos dentro dle ShadowDOM o micro-frondend
  * @param {*} shadow Shadow DOM.
  */
-    #agregarEstilos(shadow) {
-        
+    #agregarEstilos(shadow) {    
         const linkFonts = document.createElement('link');
         linkFonts.setAttribute('rel', 'stylesheet');
         linkFonts.setAttribute('type','text/css');
@@ -211,7 +213,14 @@ class ListaSorteos extends HTMLElement {
         //Limpia el contenido
         lista.shadowRoot.innerHTML = "";
         lista.outerHTML = `<reporte-numeros sorteoId="${id}"></reporte-numeros>`;
-    }    
+    }  
+    
+    #cambiarPantallaReporteDeudores(id){
+        const lista = this.shadowRoot.host;
+        //Limpia el contenido
+        lista.shadowRoot.innerHTML = "";
+        lista.outerHTML = `<reporte-deudores sorteoId="${id}"></reporte-deudores>`;
+    }
 }
 
 window.customElements.define('sorteos-lista',ListaSorteos);

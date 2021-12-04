@@ -100,17 +100,15 @@ router.get('/apartados/:id',async(req,res) =>{
             if(x.cliente != null)
             {
                 /*Se le suman los dias de plazo en milisegundos a la fecha de
-                apartados en milisegundos lo cual nos daria la fecha donde se aparto + 5 días*/
+                apartados en milisegundos lo cual nos daria la fecha donde se aparto + número de días de vencimiento*/
                 let suma = (x.movimientoBoleto.fecha.getTime() + diasDePlazo);
                 //Representa la fecha límite de pago.
                 let diaPago = new Date(suma);
-
                 var contador = 0;
                 //Se crea un objeto(JSON) para enviar los datos que nos son de relevancia.
                 auxCliente =
-                {
+                {                    
                     numero: x.numero,
-                    estado: x.estado,
                     nombreCliente: x.cliente.nombre,
                     fechaMovimiento: formatDate(x.movimientoBoleto.fecha),
                     fechaVencimiento: formatDate(diaPago)
@@ -118,10 +116,12 @@ router.get('/apartados/:id',async(req,res) =>{
                 auxClientes.push(auxCliente);                
             }
         }
+        //Se guarda el título.
+        const tituloSorteo = dataSorteo.titulo;
         //Se calcula la cantidad de deuda en ese sorteo.
         const adeudoTotal = dataSorteo.precioNumeros * auxClientes.length;
         //Se crea una constante con la lista final, la cantidad de deuda y el número de deudores.
-        const listaClientes = {clientes:auxClientes,adeudoTotal:adeudoTotal,numDeudores:auxClientes.length};
+        const listaClientes = {clientes:auxClientes,adeudoTotal:adeudoTotal,numDeudores:auxClientes.length, tituloSorteo:tituloSorteo};
         //Se envia esa constante como respuesta.
         res.status(201).json(listaClientes);
     }
