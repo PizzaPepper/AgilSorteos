@@ -1,5 +1,7 @@
 const fetch = require('cross-fetch');
 
+describe("Plan de listas de sorteos",()=>{
+
 
 // fetch("http://localhost:3312/api/v1/sorteos/lista").then(res=>res.json()).then(data=>{
 //    console.log(data);
@@ -62,6 +64,4 @@ test("Que solo muestren los sorteos terminados", (done)=>{
   });
 });
 
-
-
-
+})
