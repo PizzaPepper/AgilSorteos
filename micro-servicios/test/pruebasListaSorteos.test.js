@@ -60,7 +60,7 @@ test("Que solo muestren los sorteos terminados", (done)=>{
     }
 
     expect(check).toBe(true);
-    done();
+     done();
   });
 });
 
