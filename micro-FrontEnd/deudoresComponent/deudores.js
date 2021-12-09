@@ -81,8 +81,8 @@ class ReporteDeudores extends HTMLElement{
     </main>
         <footer>
             <div class="text-center">
-                <h4>Total deudores: <p class="d-inline text-2xl" id="numDeudores">10</p></h4>
-                <h4>Total deuda: <p class="d-inline text-2xl" id="cantDeuda">$300</p></h4>
+                <h4>Total deudores: <p class="d-inline text-2xl" id="numDeudores">0</p></h4>
+                <h4>Total deuda: <p class="d-inline text-2xl" id="cantDeuda">$0</p></h4>
             </div>
         </footer>
         `;
