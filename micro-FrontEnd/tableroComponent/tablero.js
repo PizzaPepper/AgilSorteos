@@ -86,7 +86,7 @@ class Tablero extends HTMLElement{
 
             <div class="pt-1 position-relative d-flex align-content-center justify-content-center" >
                             <h3  id="pBoleto" class="position-absolute pt-5 text-white-50">$0</h3>
-                            <img class="max-height-150" src="../../micro-FrontEnd/tableroComponent/img/ticket.png">
+                            <img class="max-height-150" src="../micro-FrontEnd/tableroComponent/img/ticket.png">
             </div>
 
             <div id="registroBoletos" class="container text-center   d-inline-flex pt-2">
