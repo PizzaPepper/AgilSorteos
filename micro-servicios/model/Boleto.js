@@ -3,6 +3,7 @@
  * Archivo js que sirve como modelo de datos para el objeto Boleto
  * @author: "La comunidad del anillo"
  * Fecha: 13 - 11 - 2021
+ * Hola soy un comentario de prueba
  */
 
 const mongoose = require('mongoose');
