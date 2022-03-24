@@ -3,6 +3,7 @@
  * Archivo js que sirve como modelo de datos para el objeto Usuario
  * @author: "La comunidad del anillo"
  * Fecha: 13 - 11 - 2021
+ * Se agrego un comentario de prueba pero ahora en visual
  */
 
 const mongoose = require('mongoose');
